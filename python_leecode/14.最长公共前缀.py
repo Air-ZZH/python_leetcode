@@ -1,29 +1,22 @@
-#法1 法2 都是python写的 还没看
-
-#法1 手动实现 s.startswith(prefix) 的效果
 class Solution:
-    def longestCommonPrefix(self, strs: list[str]) -> str:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
         if not strs:
             return ""
 
         prefix = strs[0]
-
-        for s in strs[1:]:
-            # 用你手写的 starts_with 代替 startswith
-            while not self.starts_with(s, prefix):
-                prefix = prefix[:-1]
-                if not prefix:
-                    return ""
+        count = len(strs)
+        for i in range(1,count):
+            prefix = self.lcp(prefix, strs[i])
+            if not prefix:
+                break
 
         return prefix
 
-    def starts_with(self, s: str, prefix: str) -> bool:
-        if len(prefix) > len(s):
-            return False
 
-        for i in range(len(prefix)):
-            if s[i] != prefix[i]:
-                return False
-        return True
+    def lcp(self, str1, str2):
+        length = min(len(str1),len(str2))
+        index = 0
 
-# 法二 用 while 和下标来实现字符串缩短
+        while index < length and str1[index] == str2[index]:
+            index += 1
+        return str1[:index]
